@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MovementView from '@/views/MovementView.vue'
-import ChartView from "@/views/ChartView";
+import MovementView from '../views/MovementView.vue'
+import ConceptView from "../views/ConceptView.vue";
 
 const routes = [
   {
@@ -9,14 +9,14 @@ const routes = [
     component: MovementView
   },
   {
-    path: '/charts',
-    name: 'ChartView',
-    component: ChartView
-  },
+    path: '/concepts',
+    name: 'Concept',
+    component: ConceptView
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 

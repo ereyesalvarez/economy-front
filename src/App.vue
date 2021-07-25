@@ -1,22 +1,22 @@
 <template>
-  <div class="">
-      
+  <div class="container">
+    <login v-if="!isLogged"></login>
+    <home v-if="isLogged"></home>
+    <span class="toast" :class="{red: alertMessage.type===1}" v-if="alertMessage.show">{{ alertMessage.message }}</span>
+
   </div>
 </template>
-
 <script setup>
+import {useStore} from "vuex";
+import {computed} from "vue";
+import Home from "./views/Home.vue";
+import Login from "./views/Login.vue";
 
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md
+const store = useStore()
+let alertMessage = computed(() => store.state.alertMessage)
+let isLogged = computed(() => store.getters.isLogged)
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

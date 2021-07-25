@@ -15,22 +15,23 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script setup>
-const store = useStore()
-    let username = ref("");
-    let password = ref("");
+import {useStore} from "vuex";
+import {ref} from "vue";
 
-    let doLogin = () => {
-      const payload = {
-        username: username.value,
-        password: password.value
-      }
-      store.dispatch('login', payload);
-    }
+const store = useStore()
+let username = ref("");
+let password = ref("");
+
+let doLogin = () => {
+  const payload = {
+    username: username.value,
+    password: password.value
+  }
+  store.dispatch('login', payload);
+}
 </script>
 
 

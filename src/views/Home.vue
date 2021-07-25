@@ -1,9 +1,12 @@
 <template>
-    <concept-view/>
-    <concept-view/>
+  <header id="header">
+    <router-link to="/" class="logo">Home</router-link> |
+    <router-link to="/concepts" class="button">Conceptos</router-link> |
+    <router-link to="/concepts" class="button">Conceptos</router-link> |
+  </header>
+  <router-view/>
 </template>
 <script setup>
-import { ConceptView } from './ConceptView.vue'
-import { MovementView } from './MovementView.vue'
+
 
 </script>
