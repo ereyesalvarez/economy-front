@@ -5,7 +5,13 @@ export const conceptModule = {
   state: () => ({
     concepts: []
   }),
-
+  getters: {
+    sortedConcepts: state => {
+      let auxConcepts = state.concepts
+      auxConcepts.sort((a,b) => b.count - a.count)
+      return auxConcepts
+    },
+  },
   mutations: {
     setConcepts(state, input) {
       state.concepts = input
@@ -22,17 +28,12 @@ export const conceptModule = {
           context.dispatch("handleError", reason).then()
         })
     },
-    setCategoryToConcept(context, categoryId, conceptString) {
+    setCategoryToConcept(context, payload) {
       const uri = "/movement/concept/category"
-      const payload = {
-        categoryId: categoryId,
-        concept: conceptString
-      }
       context.getters.getAxiosInstance.put(uri, payload)
         .then(_ => {
-          context.dispatch("getCategories")
-          context.dispatch("getConcepts")
-          context.dispatch("getMovements")
+          context.dispatch("getCategories").then()
+          context.dispatch("getConcepts").then()
         })
         .catch(reason => {
           context.dispatch("handleError", reason).then()

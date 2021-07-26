@@ -35,12 +35,9 @@ export const movementsModule = {
           context.dispatch("handleError", reason).then()
         })
     },
-    setCategoryToMovements(context, categoryId, movementIds) {
+    setCategoryToMovements(context, payload) {
       const uri = "/movement/category/batch"
-      const payload = {
-        categoryId: categoryId,
-        movementIdList: movementIds
-      }
+
       context.getters.getAxiosInstance.put(uri, payload)
         // eslint-disable-next-line no-unused-vars
         .then(value => {

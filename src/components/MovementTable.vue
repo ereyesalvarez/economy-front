@@ -1,6 +1,6 @@
 <template>
   <table id="movement-table">
-    <caption>Movimientos</caption>
+    <caption>Conceptos</caption>
     <thead>
     <tr>
       <th>Title</th>
@@ -21,43 +21,60 @@
   </table>
 </template>
 
-<script setup>
+<script>
 import {useStore} from "vuex";
 import {computed, ref} from "vue";
 
-const store = useStore()
-let movements = computed(() => store.state.movement.movements)
-let categories = computed(() => store.state.movement.categories)
-let selectedMovements = ref([])
-let addMovement = (movementId) => {
-  selectedMovements.value.push(movementId)
-}
-let removeMovement = (movementId) => {
-  let index = selectedMovements.value.indexOf(movementId);
-  if (index !== -1) {
-    selectedMovements.value.splice(index, 1);
+export default {
+
+  setup() {
+    const store = useStore()
+    let movements = computed(() => store.state.movement.movements)
+    let categories = computed(() => store.state.category.categories)
+    let selectedMovements = ref([])
+    let addMovement = (movementId) => {
+      selectedMovements.value.push(movementId)
+    }
+    let removeMovement = (movementId) => {
+      let index = selectedMovements.value.indexOf(movementId);
+      if (index !== -1) {
+        selectedMovements.value.splice(index, 1);
+      }
+    }
+    let addRemoveMovement = (movementId) => {
+      const position = selectedMovements.value.indexOf(movementId)
+      if (position !== -1) {
+        removeMovement(movementId)
+      } else {
+        addMovement(movementId)
+      }
+    }
+    const getSelectedMovements = () => {
+      return selectedMovements.value
+    }
+    let movementIsAdded = (movementId) => {
+      return selectedMovements.value.indexOf(movementId) !== -1
+    }
+    let obtainCategoryNameById = (categoryId) => {
+      if (!categoryId) {
+        return ""
+      }
+      const found = categories.value.find(category => category.id === categoryId);
+      if (found) {
+        return found.title
+      }
+      return "categoryNotFound"
+    }
+    return {
+      movements,
+      categories,
+      selectedMovements,
+      addRemoveMovement,
+      getSelectedMovements,
+      movementIsAdded,
+      obtainCategoryNameById
+    }
   }
-}
-let addRemoveMovement = (movementId) => {
-  const position = selectedMovements.value.indexOf(movementId)
-  if (position !== -1) {
-    removeMovement(movementId)
-  } else {
-    addMovement(movementId)
-  }
-}
-let movementIsAdded = (movementId) => {
-  return selectedMovements.value.indexOf(movementId) !== -1
-}
-let obtainCategoryNameById = (categoryId) => {
-  if (!categoryId) {
-    return ""
-  }
-  const found = categories.value.find(category => category.id === categoryId);
-  if (found) {
-    return found.title
-  } else
-    return "categoryNotFound"
 }
 </script>
 

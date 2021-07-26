@@ -4,7 +4,7 @@
       <h3>Categorias</h3>
     </div>
     <div class="col-sm">
-      <button :disabled="selectedCategoryId === ''" class="tertiary">Asignar</button>
+      <button :disabled="selectedCategoryId === ''" class="tertiary" @click="onAssignCategory">Asignar</button>
     </div>
   </div>
   <div class="row">
@@ -19,22 +19,35 @@
   </div>
 </template>
 
-<script setup>
+
+<script>
+
 import {useStore} from "vuex";
 import {computed, ref} from "vue";
 
-const store = useStore()
-let categories = computed(() => store.state.category.categories)
-let selectedCategoryId = ref("")
-let onClickCategory = (categoryId) => {
-  if (categoryId === selectedCategoryId.value) {
-    selectedCategoryId.value = ""
-  } else {
-    selectedCategoryId.value = categoryId
-  }
+export default {
+  emits: ['assignCategory'],
+  setup(props, context) {
+    const store = useStore()
+    let categories = computed(() => store.getters.sortedCategories)
+    let selectedCategoryId = ref("")
+    let onClickCategory = (categoryId) => {
+      if (categoryId === selectedCategoryId.value) {
+        selectedCategoryId.value = ""
+      } else {
+        selectedCategoryId.value = categoryId
+      }
+    }
+    let onAssignCategory = () => {
+      if(selectedCategoryId.value !== "" ){
+        context.emit('assignCategory', selectedCategoryId.value)
+      }
+    }
+    return {categories, selectedCategoryId, onClickCategory, onAssignCategory}
+  },
 }
-
 </script>
+
 
 <style scoped>
 

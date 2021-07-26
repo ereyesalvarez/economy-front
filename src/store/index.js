@@ -13,7 +13,7 @@ export default createStore({
       message: "",
       type: 0
     },
-    token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VyZXllc2FsdmFyZXouY29tIiwidXBuIjoiZXJleWVzYWx2YXJlekBnbWFpbC5jb20iLCJncm91cHMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTYyNzE2ODc5OSwiZXhwIjoxNjI3MTcyMzk5LCJlbWFpbCI6ImVyZXllc2FsdmFyZXpAZ21haWwuY29tIiwianRpIjoiYWZkNTExODItM2QzOS00NjQ1LTlkYzMtYzI2OTM4NTViYmFjIn0.KkCM8dT_hjuH3eza9AVyqJuk_Yz6V67bJmTbDvBBNSQZ60RrlqfB3oN0k6NIEHmb437g3G8oDAkEzfOCc88djYL-_NE5_YJQv9BIalOWGj6POtoeHyP3ScScG0wbP_VectzprQG_fcTVQgxBukH6QzkL1KxhseeCDTS_qIgyFfDlVZiId0iPZp_yZVNwptuzF7_PQVh5jJIaawZr7EQcmYEVeBfwwdsYHC1XgInoc2IRaJmoLmC4baN1j5SJozHkOk5j9tlMiZzF_M1Qg_I1i3B3lN3eWw8Uk--stGq8MvP8IcB3Teb0h8cAvG_0GdiaCH3s6f4PFpdS-kIe_NZLvw"
+    token: ""
 
   },
   mutations: {
@@ -73,6 +73,6 @@ export default createStore({
   modules: {
     movement: movementsModule,
     category: categoryModule,
-    concepts: conceptModule
+    concept: conceptModule
   }
 })
