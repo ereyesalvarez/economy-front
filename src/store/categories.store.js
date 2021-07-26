@@ -3,7 +3,8 @@ import {processResponse} from "../service/processResponse";
 
 export const categoryModule = {
   state: () => ({
-    categories: []
+    categories: [],
+    categoryAggregates: [],
   }),
   getters: {
     sortedCategories: state => {
@@ -15,11 +16,21 @@ export const categoryModule = {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       })
       return auxCategories
+    },
+    sortedCategoryAggregates: state => {
+      let auxCategories = state.categoryAggregates
+      auxCategories.sort((a,b) => {
+        return b-a
+      })
+      return auxCategories
     }
   },
   mutations: {
     setCategories(state, input) {
       state.categories = input
+    },
+    setCategoryAggregates(state, input) {
+      state.categoryAggregates = input
     }
   },
   actions: {
@@ -40,6 +51,16 @@ export const categoryModule = {
       context.getters.getAxiosInstance.get(uri)
         .then(value => {
           context.commit("setCategories", processResponse(value))
+        })
+        .catch(reason => {
+          context.dispatch("handleError", reason).then()
+        })
+    },
+    getCategoryAggregates(context) {
+      const uri = "/category/aggregate"
+      context.getters.getAxiosInstance.get(uri)
+        .then(value => {
+          context.commit("setCategoryAggregates", processResponse(value))
         })
         .catch(reason => {
           context.dispatch("handleError", reason).then()

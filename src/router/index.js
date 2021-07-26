@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MovementView from '../views/MovementView.vue'
 import ConceptView from "../views/ConceptView.vue";
+import CategoryChartView from "../views/CategoryChartView.vue";
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/concepts',
     name: 'Concept',
     component: ConceptView
+  },
+  {
+    path: '/chart',
+    name: 'Charts',
+    component: CategoryChartView
   }
 ]
 

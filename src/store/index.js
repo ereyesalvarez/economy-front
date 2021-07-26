@@ -13,8 +13,7 @@ export default createStore({
       message: "",
       type: 0
     },
-    token: ""
-
+    token: localStorage.getItem('token') || '',
   },
   mutations: {
     setAlertMsg(state, input) {
@@ -48,6 +47,7 @@ export default createStore({
 
       axios.post(basePath + uri, payload)
         .then(value => {
+          localStorage.setItem('token', value.data.token)
           context.commit("setToken", value.data.token)
         })
         .catch(reason => {
@@ -57,6 +57,7 @@ export default createStore({
     handleError(context, reason) {
       const processedError = processError(reason)
       if (processedError.clearToken) {
+        localStorage.removeItem('token')
         context.commit("clearToken");
       }
       context.dispatch("setError", processedError.errorMessage).then();
