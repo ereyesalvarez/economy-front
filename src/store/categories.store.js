@@ -11,8 +11,8 @@ export const categoryModule = {
       let auxCategories = state.categories
 
       auxCategories.sort((a,b) => {
-        const textA = a.title.toUpperCase();
-        const textB = b.title.toUpperCase();
+        const textA = a.group.toUpperCase();
+        const textB = b.group.toUpperCase();
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       })
       return auxCategories
@@ -34,10 +34,8 @@ export const categoryModule = {
     }
   },
   actions: {
-    createCategory(context, categoryTitle) {
+    createCategory(context, payload) {
       const uri = "/category"
-      const payload = {}
-      payload.categoryTitle = categoryTitle
       context.getters.getAxiosInstance.post(uri, payload)
         .then(_ => {
           context.dispatch("getCategories").then()

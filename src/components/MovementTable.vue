@@ -1,6 +1,6 @@
 <template>
   <table id="movement-table">
-    <caption>Conceptos</caption>
+    <caption>Movimientos</caption>
     <thead>
     <tr>
       <th>Title</th>
@@ -15,7 +15,7 @@
       <td data-label="Title">{{ movement.title }}</td>
       <td data-label="Fecha">{{ movement.date }}</td>
       <td data-label="Cantidad">{{ movement.amount }}</td>
-      <td data-label="Categoría">{{ obtainCategoryNameById(movement.categoryId) }}</td>
+      <td data-label="Categoría">{{ obtainCategoryLabelBy(movement.categoryId) }}</td>
     </tr>
     </tbody>
   </table>
@@ -55,24 +55,36 @@ export default {
     let movementIsAdded = (movementId) => {
       return selectedMovements.value.indexOf(movementId) !== -1
     }
-    let obtainCategoryNameById = (categoryId) => {
+    let obtainCategoryById = (categoryId) => {
       if (!categoryId) {
-        return ""
+        return null
       }
       const found = categories.value.find(category => category.id === categoryId);
       if (found) {
-        return found.title
+        return found
       }
-      return "categoryNotFound"
+      return null
     }
-    return {
+    let obtainCategoryLabelBy = (categoryId) => {
+      if(categoryId == null){
+        return null
+      } else {
+        let category = obtainCategoryById(categoryId)
+        if(category !== null){
+          return category.title + " " + category.group
+        }
+        return "CategoryNotFound"
+      }
+    }
+
+      return {
       movements,
       categories,
       selectedMovements,
       addRemoveMovement,
       getSelectedMovements,
       movementIsAdded,
-      obtainCategoryNameById
+        obtainCategoryLabelBy
     }
   }
 }

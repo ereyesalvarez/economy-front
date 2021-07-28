@@ -1,6 +1,6 @@
 <template>
   <table id="concept-table">
-    <caption>Movimientos</caption>
+    <caption>Conceptos</caption>
     <thead>
     <tr>
       <th>Title</th>
@@ -16,7 +16,7 @@
       <td data-label="Fecha">{{ concept.amount }}</td>
       <td data-label="Movimientos">{{ concept.count }}</td>
       <td data-label="Categorías">
-        <span v-for="(cat, catIndex) in concept.categories" :key="catIndex">{{obtainCategoryNameById(cat)}}</span>
+        <span v-for="(cat, catIndex) in concept.categories" :key="catIndex">{{obtainCategoryLabelBy(cat)}}</span>
       </td>
     </tr>
     </tbody>
@@ -37,15 +37,27 @@ export default {
     const getSelectedConcept = () => {
       return selectedConceptTitle.value
     }
-    let obtainCategoryNameById = (categoryId) => {
+
+    let obtainCategoryById = (categoryId) => {
       if (!categoryId) {
-        return ""
+        return null
       }
       const found = categories.value.find(category => category.id === categoryId);
       if (found) {
-        return found.title
+        return found
       }
-      return "categoryNotFound"
+      return null
+    }
+    let obtainCategoryLabelBy = (categoryId) => {
+      if(categoryId == null){
+        return null
+      } else {
+        let category = obtainCategoryById(categoryId)
+        if(category !== null){
+          return category.title + " " + category.group
+        }
+        return "CategoryNotFound"
+      }
     }
     let addRemoveConcept = (conceptTitle) => {
       if(selectedConceptTitle.value === conceptTitle){
@@ -55,7 +67,7 @@ export default {
       }
     }
     return {
-      concepts, categories, selectedConceptTitle, getSelectedConcept, obtainCategoryNameById, addRemoveConcept
+      concepts, categories, selectedConceptTitle, getSelectedConcept, obtainCategoryLabelBy, addRemoveConcept
     }
   }
 }

@@ -12,7 +12,7 @@
       <div class="card fluid">
         <div v-for="(category, index) in categories" :key="index" :class="{ dark: category.id===selectedCategoryId }"
              class="section" @click="onClickCategory(category.id)">
-          {{ category.title }}
+          <b>{{ category.group }}</b> {{ category.title }}
         </div>
       </div>
     </div>
