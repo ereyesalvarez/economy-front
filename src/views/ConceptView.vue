@@ -1,12 +1,17 @@
 <template>
   <div class="row">
+    <div class="col-sm">
+      <progress class="inline primary" max="100" style="background-color: antiquewhite; width: 100%" :value="calculated"></progress>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-9">
       <concept-table ref="reference"/>
     </div>
-  <div class="col-sm-3">
-    <create-category-form/>
-    <category-list v-on:assignCategory="handleAssignCategory"/>
-  </div>
+    <div class="col-sm-3">
+      <create-category-form/>
+      <category-list v-on:assignCategory="handleAssignCategory"/>
+    </div>
   </div>
 </template>
 
@@ -15,7 +20,7 @@ import CategoryList from "../components/CategoryList.vue";
 import CreateCategoryForm from "../components/CreateCategoryForm.vue";
 import ConceptTable from "../components/ConceptTable.vue";
 import {useStore} from "vuex";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 export default {
   name: "ConceptView",
@@ -23,6 +28,7 @@ export default {
   setup() {
     const store = useStore()
     const reference = ref(null);
+    let calculated = computed(() => store.getters.getCategoryProgress)
 
     let getConcepts = () => {
       store.dispatch('getConcepts')
@@ -30,9 +36,9 @@ export default {
     let getCategories = () => {
       store.dispatch('getCategories')
     }
-    let handleAssignCategory= (value)=>{
+    let handleAssignCategory = (value) => {
       let selectedConceptTitle = reference.value.getSelectedConcept()
-      if(selectedConceptTitle == null || selectedConceptTitle === ""){
+      if (selectedConceptTitle == null || selectedConceptTitle === "") {
         console.log("Error selectedConceptTitle null")
         return
       }
@@ -43,7 +49,7 @@ export default {
       store.dispatch('setCategoryToConcept', payload)
     }
     return {
-      getConcepts, getCategories, handleAssignCategory, reference
+      getConcepts, getCategories, handleAssignCategory, reference, calculated
     }
   },
   mounted() {

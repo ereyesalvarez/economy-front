@@ -2,8 +2,8 @@
   <fieldset>
     <legend>Crear categoría</legend>
     <label for="category">Categoría</label>
-    <input id="category" v-model="categoryTitle" placeholder="Categoría" type="text"/>
     <input id="category-group" v-model="categoryGroup" placeholder="Grupo" type="text"/>
+    <input id="category" v-model="categoryTitle" placeholder="Categoría" type="text"/>
     <button class="primary" @click="sendCreateCategory">Crear</button>
   </fieldset>
 </template>

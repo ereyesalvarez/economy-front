@@ -1,4 +1,6 @@
 import {processResponse} from "../service/processResponse";
+import calculatePercentage from "../service/calculatePercentage";
+import groupBy from "../service/groupBy";
 
 
 export const conceptModule = {
@@ -8,8 +10,22 @@ export const conceptModule = {
   getters: {
     sortedConcepts: state => {
       let auxConcepts = state.concepts
-      auxConcepts.sort((a,b) => b.count - a.count)
+      auxConcepts.sort((a, b) => b.amount - a.amount)
       return auxConcepts
+    },
+    getCategoryProgress: state => {
+      let total = state.concepts.length
+      let auxConcepts = state.concepts;
+      let count = auxConcepts.filter(value => value.categories.length > 0).length
+      return Math.round(calculatePercentage(count, total))
+    },
+    getGrouped: state => {
+      return groupBy(state.concepts, concept => concept.group).map(input => {
+        return {
+          group: input.group,
+          categories: input
+        }
+      })
     },
   },
   mutations: {
@@ -18,9 +34,12 @@ export const conceptModule = {
     },
   },
   actions: {
-    getConcepts(context){
+    getConcepts(context) {
       const uri = "/movement/concept"
-      context.getters.getAxiosInstance.get(uri)
+      let options = {}
+      options.params = context.getters.asParams
+      console.log(options)
+      context.getters.getAxiosInstance.get(uri, options)
         .then(value => {
           context.commit("setConcepts", processResponse(value))
         })

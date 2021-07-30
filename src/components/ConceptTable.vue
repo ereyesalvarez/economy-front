@@ -3,20 +3,22 @@
     <caption>Conceptos</caption>
     <thead>
     <tr>
+      <th style="max-width:7%">#</th>
       <th>Title</th>
-      <th>Cantidad</th>
-      <th>N. movimientos</th>
+      <th style="max-width:10%">Cantidad</th>
+      <th style="max-width:10%">N. mov</th>
       <th>Categorías</th>
     </tr>
     </thead>
     <tbody>
     <tr v-for="(concept, index) in concepts" :key="index" :class="{ active: concept.title === selectedConceptTitle }"
         @click="addRemoveConcept(concept.title)">
+      <td  style="max-width:7%" data-label="#" >{{index}}</td>
       <td data-label="Title">{{ concept.title }}</td>
-      <td data-label="Fecha">{{ concept.amount }}</td>
-      <td data-label="Movimientos">{{ concept.count }}</td>
+      <td data-label="Total" style="max-width:10%">{{ concept.amount?.toFixed(2) }}</td>
+      <td data-label="Movimientos" style="max-width:10%">{{ concept.count }}</td>
       <td data-label="Categorías">
-        <span v-for="(cat, catIndex) in concept.categories" :key="catIndex">{{obtainCategoryLabelBy(cat)}}</span>
+        <span v-for="(cat, catIndex) in concept.categories" :key="catIndex" class="badge">{{obtainCategoryLabelBy(cat)}}</span>
       </td>
     </tr>
     </tbody>
@@ -80,5 +82,19 @@ export default {
 
 #concept-table {
   max-height: 90vh;
+}
+
+
+.badge {
+  display: inline-block;
+  min-width: 16px; /* pixel unit */
+  padding: 5px 5px; /* pixel unit */
+  border-radius: 50%;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+table th, table td{
+  padding: 0.2px
 }
 </style>

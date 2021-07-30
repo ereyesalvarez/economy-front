@@ -5,6 +5,7 @@ import axios from "axios";
 import {movementsModule} from './movement.store'
 import {categoryModule} from "./categories.store";
 import {conceptModule} from "./concept.store";
+import {filterModule} from "./filter.store";
 
 export default createStore({
   state: {
@@ -74,6 +75,7 @@ export default createStore({
   modules: {
     movement: movementsModule,
     category: categoryModule,
-    concept: conceptModule
+    concept: conceptModule,
+    filter: filterModule
   }
 })
