@@ -1,26 +1,13 @@
-const groupBy = key => array =>
-  array.reduce(
-    (objectsByKeyValue, obj) => ({
-      ...objectsByKeyValue,
-      [obj[key]]: (objectsByKeyValue[obj[key]] || []).concat(obj)
-    }),
-    {}
-  );
 
-const cars = [
-  { brand: 'Audi', color: 'black' },
-  { brand: 'Audi', color: 'white' },
-  { brand: 'Ferarri', color: 'red' },
-  { brand: 'Ford', color: 'white' },
-  { brand: 'Peugot', color: 'white' }
-];
+let a = [
+  {
+    x: "a",
+    y: "b"
+  },
+  {
+    x: "a1",
+    y: "b2"
+  }
+]
 
-const groupByBrand = groupBy('brand');
-const groupByColor = groupBy('color');
-
-console.log(
-  JSON.stringify({
-    carsByBrand: groupByBrand(cars),
-    carsByColor: groupByColor(cars)
-  }, null, 2)
-);
+console.log(a.find(value => value.x === "b") === undefined)
